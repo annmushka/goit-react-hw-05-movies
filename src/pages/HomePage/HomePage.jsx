@@ -6,7 +6,7 @@ import { MovieItem } from 'components/MovieItem/MovieItem';
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -15,7 +15,7 @@ const Home = () => {
         const movies = await requestTrendingMovies();
         setMovies(movies.results);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       } finally {
         setIsLoading(false);
       }

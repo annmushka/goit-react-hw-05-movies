@@ -20,7 +20,7 @@ const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState(null);
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMovieDetails = async movieId => {
@@ -30,7 +30,7 @@ const MovieDetails = () => {
         // console.log(movieDetails);
         setMovieDetails(movieDetails);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       } finally {
         setIsLoading(false);
       }

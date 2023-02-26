@@ -8,17 +8,15 @@ const Cast = () => {
   const { movieId } = useParams();
   const [movieCast, setMovieCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMovieCast = async movieId => {
       setIsLoading(true);
       try {
         const movieCast = await requestMovieCast(movieId);
-        // console.log(movieCast);
         setMovieCast(movieCast.cast);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       } finally {
         setIsLoading(false);
       }
