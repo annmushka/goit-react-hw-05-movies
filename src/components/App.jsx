@@ -1,8 +1,4 @@
 import React, { lazy, Suspense } from 'react';
-// import { Home } from 'pages/Home';
-// import { SearchMovies } from 'pages/SearchMovies';
-// import { MovieDetails } from 'pages/MovieDetails';
-// import { Header } from './Header/Header';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Loader from 'components/Loader/Loader';
 
