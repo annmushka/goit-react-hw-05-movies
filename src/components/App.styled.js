@@ -1,3 +1,4 @@
+import React, { lazy, Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -13,4 +14,3 @@ export const StyledNavLink = styled(NavLink)`
     border-bottom: 2px solid blue;
   }
 `;
-

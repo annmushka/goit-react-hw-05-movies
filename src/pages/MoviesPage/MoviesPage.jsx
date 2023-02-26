@@ -1,31 +1,27 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { searchMovieQuery } from 'services/api';
-
-import { MoviesItem } from 'components/ListItem/MoviesItem';
 import { SearchForm } from 'components/SearchForm/SearchForm';
-import { Loader } from 'components/Loader/Loader';
-import { PostsList } from 'pages/MoviesPage/MoviesPage.styled';
+import Loader from 'components/Loader/Loader';
+import { MovieItem } from 'components/MovieItem/MovieItem';
 
-export function MoviesPage() {
+const SearchMovies = () => {
   const [movies, setMovies] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const location = useLocation();
 
   const searchQuery = searchParams.get('query');
 
   useEffect(() => {
     if (searchQuery === null) return;
 
-    async function getMovies(query) {
+    async function getMovies() {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
+        const movie = await searchMovieQuery(searchQuery);
 
-        const { result } = await searchMovieQuery(searchQuery);
-
-        setMovies(result);
+        setMovies(movie.results);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -45,12 +41,14 @@ export function MoviesPage() {
       <SearchForm defaultValue={searchQuery} onSubmit={onSubmit} />
       {isLoading && <Loader />}
       {error !== null && <p>There are no movies for your request {error}</p>}
-      <PostsList>
+      <ul>
         {movies !== null &&
-          movies.map(post => {
-            return <MoviesItem location={location} {...post} key={post.id} />;
+          movies.map(movie => {
+            return <MovieItem movie={movie} key={movie.id} />;
           })}
-      </PostsList>
+      </ul>
     </div>
   );
-}
+};
+
+export default SearchMovies;

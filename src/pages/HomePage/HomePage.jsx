@@ -1,40 +1,41 @@
-// import Item from 'components/ListItem/Item';
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { requestTrendingMovies } from 'services/api';
+import Loader from 'components/Loader/Loader';
+import { MovieItem } from 'components/MovieItem/MovieItem';
 
-// import { MoviesList } from './HomePages.styled';
-import { Title, MoviesList } from './HomePages.styled';
-import { MoviesItem } from '../../components/ListItem/MoviesItem';
-
-export function HomePage() {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchMovies() {
+    const fetchMovies = async () => {
       setIsLoading(true);
       try {
         const movies = await requestTrendingMovies();
-        setMovies(movies);
+        setMovies(movies.results);
       } catch (error) {
         setError(error.message);
       } finally {
         setIsLoading(false);
       }
-    }
+    };
+
     fetchMovies();
   }, []);
 
   return (
     <>
-      <Title>Trending today</Title>
-      <MoviesList>
+      {isLoading && <Loader />}
+      <h1>Trending today</h1>
+      <ul>
         {movies !== null &&
           movies.map(movie => {
-            return <MoviesItem {...movies} key={movie.id} />;
+            return <MovieItem movie={movie} key={movie.id} />;
           })}
-      </MoviesList>
+      </ul>
     </>
   );
-}
+};
+
+export default Home;

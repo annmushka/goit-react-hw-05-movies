@@ -9,7 +9,6 @@ export const StyledLoader = styled.div`
   height: 80px;
   transform: rotate(45deg);
   transform-origin: 40px 40px;
-
   & div {
     top: 32px;
     left: 32px;
